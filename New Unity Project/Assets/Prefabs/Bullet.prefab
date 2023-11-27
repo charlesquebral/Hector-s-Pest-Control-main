@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3899742889817870604}
   - component: {fileID: 3899742889817870605}
   - component: {fileID: 3899742889817870602}
+  - component: {fileID: -699368565750690712}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -62,8 +63,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3899742889817870605}
-  bulletStrength: 65
+  bulletStrength: 100
   lifetime: 2
+  Impact: {fileID: 400924851368984118, guid: 4d47aaaa4c647ff4b83fabbeb6f4a766, type: 3}
+--- !u!114 &-699368565750690712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3899742889817870603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0976348301617a440936f10b10b87cf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2
 --- !u!1 &3899742890080191856
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 3899742890080191856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 3899742889817870604}
   m_RootOrder: 0
@@ -154,7 +169,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &3899742890080191863
 TrailRenderer:
@@ -203,16 +218,16 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.062199652
-        inSlope: 0
-        outSlope: 0
+        value: 0.042782176
+        inSlope: -0.084832385
+        outSlope: -0.084832385
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.10375276
       - serializedVersion: 3
-        time: 0.5895307
-        value: 0.03348604
+        time: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -224,8 +239,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.80729437, b: 0, a: 1}
-      key1: {r: 1, g: 0.80729437, b: 0, a: 0.6117647}
+      key0: {r: 1, g: 0.9465224, b: 0.7216981, a: 1}
+      key1: {r: 1, g: 0.9428968, b: 0.7028302, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

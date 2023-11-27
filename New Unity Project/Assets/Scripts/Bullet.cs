@@ -7,11 +7,14 @@ public class Bullet : MonoBehaviour
     public Rigidbody rb;
     public float bulletStrength;
     public int lifetime;
+    public GameObject Impact;
+    public ScoreKeeper sk;
 
     // Start is called before the first frame update
     void Start()
     {
         //rb.AddForce(transform.forward * bulletStrength);
+        sk = FindObjectOfType<ScoreKeeper>();
     }
 
     // Update is called once per frame
@@ -24,7 +27,15 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<AI>())
         {
-            collision.gameObject.GetComponent<AI>().Die();
+            if (collision.gameObject.GetComponent<AI>().isEnabled)
+            {
+                sk.shotsMade++;
+                collision.gameObject.GetComponent<AI>().Die();
+            }
+        }
+        else
+        {
+            GameObject GO = Instantiate(Impact, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
         }
         Destroy(gameObject);
     }

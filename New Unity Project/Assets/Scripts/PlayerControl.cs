@@ -14,8 +14,18 @@ public class PlayerControl : MonoBehaviour
     private float verticalRotation = 0f;
     private Vector3 playerVelocity;
 
+    public ScoreKeeper sk;
+
+    public Vector3[] stance;
+    public float[] collHeight;
+    public Vector3[] collPos;
+
+    public bool crouch = false;
+    public bool prone = false;
+
     void Start()
     {
+        sk = FindObjectOfType<ScoreKeeper>();
         characterController = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -24,14 +34,59 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        // Player Movement
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            crouch = !crouch;
+            prone = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            crouch = false;
+            prone = !prone;
+        }
+
+        if (crouch)
+        {
+            characterController.height = collHeight[1];
+            characterController.center = collPos[1];
+            playerCamera.transform.localPosition = Vector3.Slerp(playerCamera.transform.localPosition, stance[1], 5 * Time.deltaTime);
+            movementSpeed = 3;
+        }
+        else if (prone)
+        {
+            characterController.height = collHeight[2];
+            characterController.center = collPos[2];
+            playerCamera.transform.localPosition = Vector3.Slerp(playerCamera.transform.localPosition, stance[2], 5 * Time.deltaTime);
+            movementSpeed = 1;
+        }
+        else
+        {
+            characterController.height = collHeight[0];
+            characterController.center = collPos[0];
+            playerCamera.transform.localPosition = Vector3.Slerp(playerCamera.transform.localPosition, stance[0], 5 * Time.deltaTime);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                movementSpeed = 8;
+            }
+            else
+            {
+                movementSpeed = 5;
+            }
+        }
+
+        Move();
+    }
+
+    private void Move()
+    {
         float horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
         float verticalMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
 
         Vector3 movement = transform.right * horizontalMovement + transform.forward * verticalMovement;
         characterController.Move(movement);
 
-        // Player Rotation (Mouse Look)
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -41,7 +96,6 @@ public class PlayerControl : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-        // Apply Gravity
         playerVelocity.y += gravity * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
 

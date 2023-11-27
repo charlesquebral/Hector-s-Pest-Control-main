@@ -20,9 +20,14 @@ public class Gun : MonoBehaviour
 
     public Animator gunAnim;
 
+    public ScoreKeeper sk;
+
+    public GameObject laser;
+
     // Start is called before the first frame update
     void Start()
     {
+        sk = FindObjectOfType<ScoreKeeper>();
         ammo = maxammo;
         time = 0;
     }
@@ -50,10 +55,21 @@ public class Gun : MonoBehaviour
         {
             gunAnim.SetInteger("state", 0);
         }
+
+        RaycastHit hit;
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        if (Physics.Raycast(ray, out hit, 1000f))
+        {
+            if (hit.collider != null)
+            {
+                laser.transform.position = hit.point;
+            }
+        }
     }
 
     public void Fire()
     {
+        sk.shotsTaken++;
         auso.Play();
         ps.Play();
         for (int i = 0; i < 12; i++)
@@ -73,7 +89,11 @@ public class Gun : MonoBehaviour
     {
         if (hit.gameObject.GetComponent<AI>())
         {
-            hit.gameObject.GetComponent<AI>().Squat();
+            if (hit.gameObject.GetComponent<AI>().isEnabled)
+            {
+                hit.gameObject.GetComponent<AI>().isEnabled = false;
+                hit.gameObject.GetComponent<AI>().squat = true;
+            }
         }
     }
 }
