@@ -32,9 +32,16 @@ public class HouseData : MonoBehaviour
             }
             else
             {
-                if (openDoors.Contains(doors[i]) && openDoors[i].doorComplete)
+                if (openDoors.Contains(doors[i]))
                 {
-                    openDoors.Remove(doors[i]);
+                    for (int j = 0; j < openDoors.Count; j++)
+                    {
+                        if (openDoors[j] == doors[i])
+                        {
+                            if (openDoors[j].doorComplete)
+                                openDoors.Remove(doors[i]);
+                        }
+                    }
                 }
             }
         }
