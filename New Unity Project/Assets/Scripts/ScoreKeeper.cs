@@ -65,7 +65,8 @@ public class ScoreKeeper : MonoBehaviour
 
         if (shotsTaken <= 0)
         {
-            accuracyText.text = "Accuracy: 100.00%";
+            perc = 0;
+            accuracyText.text = "Accuracy: 0.00%";
         }
         else
         {
@@ -87,7 +88,8 @@ public class ScoreKeeper : MonoBehaviour
 
         if (shotsTaken <= 0)
         {
-            accuracyText.text = "Accuracy: 100.00%";
+            perc = 0;
+            accuracyText.text = "Accuracy: 0.00%";
         }
         else
         {

@@ -15,7 +15,7 @@ public class HouseData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(insides);
+        insides.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,10 +48,9 @@ public class HouseData : MonoBehaviour
 
         if (openDoors.Count > 0 || player != null)
         {
-            if (insides == null)
+            if (!insides.activeSelf)
             {
-                GameObject GO = Instantiate(fauxInsides, transform.position, transform.rotation);
-                insides = GO;
+                insides.SetActive(true);
             }
 
             if (!Hectors.activeSelf)
@@ -61,9 +60,9 @@ public class HouseData : MonoBehaviour
         }
         else
         {
-            if (insides != null)
+            if (insides.activeSelf)
             {
-                Destroy(insides);
+                insides.SetActive(false);
             }
 
             if (Hectors.activeSelf)

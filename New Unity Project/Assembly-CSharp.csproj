@@ -68,34 +68,17 @@
     <Compile Include="Assets\Ciconia Studio\_Shared Files\Scripts\Demo\FreeCamera.cs" />
     <Compile Include="Assets\Ciconia Studio\_Shared Files\Scripts\Demo\SuperCamera.cs" />
     <Compile Include="Assets\Ciconia Studio\_Shared Files\Scripts\Demo\UIButton_ShowNext.cs" />
-    <Compile Include="Assets\scgFullBodyController\Exporting\ExportPackage.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\Adjuster.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\AiController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\AiGunController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\CameraControlledIK.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\CameraController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\DontGoThroughThings.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\GunController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\GunManager.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\HealthController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\hudController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\kickSensing.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\OffsetRotation.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\ragdollCamera.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\registerHit.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\sceneController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\SimpleFootsteps.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\sniperScopeController.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\ThirdPersonCharacter.cs" />
-    <Compile Include="Assets\scgFullBodyController\Scripts\ThirdPersonUserControl.cs" />
     <Compile Include="Assets\Scripts\AI.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\Door.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Scripts\HouseData.cs" />
+    <Compile Include="Assets\Scripts\Key.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\PositionFollower.cs" />
     <Compile Include="Assets\Scripts\ScoreKeeper.cs" />
+    <Compile Include="Assets\Scripts\ViewBobbing.cs" />
     <Compile Include="Assets\Scripts\WeaponSway.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -140,7 +123,6 @@
     <None Include="Assets\Ciconia Studio\Shaders\Standard Shaders\BuiltIn\CS_Standard (Specular setup) Opaque.shader" />
     <None Include="Assets\ATLAS\Customizable Kitchen Pack\KitchenPackDocs.txt" />
     <None Include="Assets\Ciconia Studio\Shaders\Standard Shaders\BuiltIn\CS_Lite Standard (Specular setup) Transparent.shader" />
-    <None Include="Assets\scgFullBodyController\Shaders\WFX_S Particle Add A8.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -728,22 +710,6 @@
     <ProjectReference Include="NavMeshComponents.csproj">
       <Project>{8AFB991B-4A2A-7B38-E812-6612D722293C}</Project>
       <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VSCode.Editor.csproj">
-      <Project>{02FE65F0-FA6E-FB2F-DC1E-CB733254DFAF}</Project>
-      <Name>Unity.VSCode.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
-      <Project>{AFFD73FB-EB7B-5679-66C9-528D9C701D4C}</Project>
-      <Name>Unity.Postprocessing.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Rider.Editor.csproj">
-      <Project>{326A4F9C-20F0-E078-29A3-6605A766BA46}</Project>
-      <Name>Unity.Rider.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{EC514AB4-9D49-B529-1299-8F5C8E6B6447}</Project>
-      <Name>Unity.Postprocessing.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

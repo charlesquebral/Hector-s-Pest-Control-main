@@ -7,11 +7,16 @@ ScriptsOnlyBuild:
     - Door
     - Gun
     - HouseData
+    - Key
     - PlayerControl
+    - PositionFollower
     - ScoreKeeper
+    - ViewBobbing
     - WeaponSway
     NavMeshComponents.dll:
     - UnityEngine.AI.NavMeshSurface
+    NavMeshComponentsEditor.dll:
+    - UnityEditor.AI.NavMeshAssetManager
     Unity.TextMeshPro.dll:
     - TMPro.TMP_ColorGradient
     - TMPro.TMP_FontAsset
@@ -22,8 +27,11 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationBlendTree.Node
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -127,6 +135,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10574}
     - Class: 114
       Script: {instanceID: 10652}
+    - Class: 114
+      Script: {instanceID: 8348554}
+    - Class: 114
+      Script: {instanceID: 9880420}
+    - Class: 114
+      Script: {instanceID: 9880426}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -778,7 +792,7 @@ ScriptsOnlyBuild:
     className: ChatController
   - hash:
       serializedVersion: 2
-      Hash: 48f2eacac1929ddb70c9f96479d0f829
+      Hash: 018180e90f9d006ac4721cc549fe2ef9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Door
@@ -952,7 +966,7 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: 87f415e863cbd8a11dcd0f19e634aeca
+      Hash: 2079509b8f2b8f44a7daba4535f8ee00
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerControl
@@ -1100,6 +1114,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 02d8be15ef7b21fbbb349be698deda42
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Key
+  - hash:
+      serializedVersion: 2
+      Hash: 2edd1dc84f6f27785c3880acf0b306ab
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PositionFollower
+  - hash:
+      serializedVersion: 2
+      Hash: 734d685a77561fed1d99849b96b37b77
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ViewBobbing
   platform: 19
   scenePathNames:
   - Assets/Scene0.unity
