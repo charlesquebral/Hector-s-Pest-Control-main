@@ -41,14 +41,21 @@ public class ViewBobbing : MonoBehaviour
         float sinAmountY = -Mathf.Abs(effectIntensity * Mathf.Sin(SinTime));
         Vector3 sinAmountX = followerInstance.transform.right * effectIntensity * Mathf.Cos(SinTime) * effectIntensityx;
 
-        followerInstance.offset = new Vector3
+        if (pc.characterController.isGrounded)
         {
-            x = origOffset.x,
-            y = origOffset.y + sinAmountY,
-            z = origOffset.z
-        };
+            followerInstance.offset = new Vector3
+            {
+                x = origOffset.x,
+                y = origOffset.y + sinAmountY,
+                z = origOffset.z
+            };
 
-        followerInstance.offset += sinAmountX;
+            followerInstance.offset += sinAmountX;
+        }
+        else
+        {
+            followerInstance.offset = Vector3.zero;
+        }
 
         if (!pc.crouch && !pc.prone && !pc.legs.GetBool("run"))
         {

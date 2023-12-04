@@ -12,15 +12,28 @@ public class HouseData : MonoBehaviour
 
     public GameObject Hectors;
 
+    bool playerExists;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerExists = player == null;
         insides.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (playerExists != (player == null))
+        {
+            if (player == null)
+            {
+                player = gameObject;
+                current = StartCoroutine(SetAsNull());
+            }
+            playerExists = player == null;
+        }
+
         for (int i = 0; i < doors.Length; i++)
         {
             if (doors[i].open)
@@ -48,6 +61,11 @@ public class HouseData : MonoBehaviour
 
         if (openDoors.Count > 0 || player != null)
         {
+            if (current != null)
+            {
+                StopCoroutine(current);
+            }
+
             if (!insides.activeSelf)
             {
                 insides.SetActive(true);
@@ -87,6 +105,7 @@ public class HouseData : MonoBehaviour
         }
     }
 
+    Coroutine current;
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<PlayerControl>())
@@ -100,5 +119,17 @@ public class HouseData : MonoBehaviour
                 other.gameObject.transform.SetParent(gameObject.transform);
             }
         }
+    }
+
+    public IEnumerator SetAsNull()
+    {
+        yield return new WaitForSeconds(5);
+        GameObject ragDoll = GameObject.FindGameObjectWithTag("ragdoll");
+        if (ragDoll != null)
+        {
+            ragDoll.transform.SetParent(insides.transform);
+            ragDoll.tag = "Untagged";
+        }
+        player = null;
     }
 }

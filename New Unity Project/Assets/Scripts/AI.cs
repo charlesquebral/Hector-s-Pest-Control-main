@@ -29,8 +29,16 @@ public class AI : MonoBehaviour
     [Header("Abilities")]
     public int ability;
     public Material[] abilmat;
-    public Material invisibleMat;
+    [Header("invisible")]
     public bool camo = false;
+    public Material invisibleMat;
+    public int waitTime = 5;
+    [Header("poison")]
+    public bool poison = false;
+    public GameObject poisonProj;
+    [Header("explosion")]
+    public bool explosion = false;
+    public GameObject explosionObj;
 
     void Start()
     {
@@ -53,15 +61,23 @@ public class AI : MonoBehaviour
 
         switch (ability)
         {
-            case 1:
+            case 1: //superfast
                 agent.speed = 4.5f;
+                waitTime = 0;
                 break;
-            case 2:
+            case 2: //superstrong
                 health = 50f;
                 agent.speed = .75f;
                 break;
-            case 3:
+            case 3: //invisible
                 camo = true;
+                waitTime = 15;
+                break;
+            case 4: //poison
+                poison = true;
+                break;
+            case 5: //explosion
+                explosion = true;
                 break;
         }
     }
@@ -124,7 +140,11 @@ public class AI : MonoBehaviour
 
     IEnumerator Wander()
     {
-        yield return new WaitForSeconds(r.Next(0, 5));
+        if (poison)
+        {
+            ShootPoison();
+        }
+        yield return new WaitForSeconds(r.Next(0, waitTime));
         destCoord = new Vector3(spawn.x + r.Next(lowerX, upperX), spawn.y, spawn.z + r.Next(lowerZ, upperZ));
         if (isEnabled)
         {
@@ -133,20 +153,56 @@ public class AI : MonoBehaviour
         readyNext = true;
     }
 
+    public void ShootPoison()
+    {
+        PlayerControl pc = FindObjectOfType<PlayerControl>();
+
+        if (pc != null)
+        {
+            Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + .75f, transform.position.z);
+
+            Vector3 targPos = new Vector3(pc.gameObject.transform.position.x, pc.gameObject.transform.position.y + 1f, pc.gameObject.transform.position.z);
+
+            RaycastHit hit;
+            Vector3 rayDirection = targPos - spawnPos;
+
+            if (Physics.Raycast(spawnPos, rayDirection, out hit, 100))
+            {
+                print(hit.collider.gameObject);
+                if (hit.collider.gameObject == pc.gameObject)
+                {
+                    GameObject GO = Instantiate(poisonProj, spawnPos, transform.rotation);
+                    GO.GetComponent<Poison>().FireCannonAtPoint(targPos);
+                }
+            }
+            else
+            {
+                print("cant find");
+            }
+        }
+    }
+
     public void Die()
     {
         if (isEnabled)
         {
-            if (camo)
-            {
-                rend.sharedMaterial = abilmat[ability];
-            }
-
             sk.numDead++;
             isEnabled = false;
             agent.enabled = false;
             GetComponent<BoxCollider>().enabled = false;
             anim.enabled = false;
+
+            if (camo)
+            {
+                rend.sharedMaterial = abilmat[ability];
+            }
+            else if (explosion)
+            {
+                Vector3 spawn = new Vector3(transform.position.x, transform.position.y + .25f, transform.position.z);
+                GameObject GO = Instantiate(explosionObj, spawn, Quaternion.identity);
+                GO.transform.SetParent(null);
+                Destroy(gameObject);
+            }
         }
     }
 

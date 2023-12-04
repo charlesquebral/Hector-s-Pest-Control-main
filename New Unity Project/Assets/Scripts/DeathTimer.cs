@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class DeathTimer : MonoBehaviour
 {
-    public int lifeTime = 2;
+    public float lifeTime = 2;
+    public bool fromAwake = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Die());
+        if (fromAwake)
+        {
+            StartCoroutine(Die());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void StartDeath()
     {
-        
+        StartCoroutine(Die());
     }
 
     IEnumerator Die()

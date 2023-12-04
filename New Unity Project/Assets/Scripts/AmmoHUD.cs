@@ -19,18 +19,25 @@ public class AmmoHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = shells.Length - 1; i >= 0; i--)
+        if (gun != null)
         {
-            if (i < gun.ammo)
+            for (int i = shells.Length - 1; i >= 0; i--)
             {
-                shells[i].color = col1;
-                shells[i].transform.GetChild(0).GetComponent<Image>().color = col2;
+                if (i < gun.ammo)
+                {
+                    shells[i].color = col1;
+                    shells[i].transform.GetChild(0).GetComponent<Image>().color = col2;
+                }
+                else
+                {
+                    shells[i].color = Color.grey;
+                    shells[i].transform.GetChild(0).GetComponent<Image>().color = Color.grey;
+                }
             }
-            else
-            {
-                shells[i].color = Color.grey;
-                shells[i].transform.GetChild(0).GetComponent<Image>().color = Color.grey;
-            }
+        }
+        else
+        {
+            gun = FindObjectOfType<Gun>();
         }
     }
 }

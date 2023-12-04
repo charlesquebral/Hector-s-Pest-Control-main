@@ -121,9 +121,25 @@ public class PlayerControl : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
 
-        if (characterController.isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (characterController.isGrounded)
         {
-            playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            if (legs.GetBool("jump"))
+            {
+                legs.SetBool("jump", false);
+                shadow.SetBool("jump", false);
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            }
+        }
+        else if (!characterController.isGrounded)
+        {
+            if (!legs.GetBool("jump"))
+            {
+                legs.SetBool("jump", true);
+                shadow.SetBool("jump", true);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ public class Door : MonoBehaviour
     public Vector3[] targRot;
     public Vector3 targetRotation;
     public GameObject doors;
-    public GameObject player;
+    public PlayerControl player;
     public float playerRange = 1;
     public float time = .75f;
     public bool doorComplete = true;
@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerControl>().gameObject;
+        player = FindObjectOfType<PlayerControl>();
     }
 
     public void Action()
@@ -41,6 +41,8 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        player = FindObjectOfType<PlayerControl>();
+
         if (open)
         {
             doors.transform.localRotation = Quaternion.Slerp(doors.transform.localRotation, Quaternion.Euler(targetRotation), time * Time.deltaTime);
@@ -60,17 +62,20 @@ public class Door : MonoBehaviour
             }
         }
 
-        Vector3 directionToTarget = transform.position - player.transform.position;
-        float angle = Vector3.Angle(transform.right, directionToTarget);
-        if (Mathf.Abs(angle) < 90)
+        if (player != null)
         {
-            status = "target is in front of me";
-            front = true;
-        }
-        else
-        {
-            status = "target is behind me";
-            front = false;
+            Vector3 directionToTarget = transform.position - player.transform.position;
+            float angle = Vector3.Angle(transform.right, directionToTarget);
+            if (Mathf.Abs(angle) < 90)
+            {
+                status = "target is in front of me";
+                front = true;
+            }
+            else
+            {
+                status = "target is behind me";
+                front = false;
+            }
         }
     }
 }

@@ -35,8 +35,10 @@ public class Gun : MonoBehaviour
 
     Coroutine reloading;
 
+    public bool batchCalc = false;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         sk = FindObjectOfType<ScoreKeeper>();
         ammo = maxammo;
@@ -124,6 +126,7 @@ public class Gun : MonoBehaviour
 
     public void Fire()
     {
+        batchCalc = false;
         ammo--;
         sk.shotsTaken++;
         if (indoor)
@@ -150,6 +153,7 @@ public class Gun : MonoBehaviour
             spreadDirection = Quaternion.Euler(randomXangle, randomZangle, 0) * spreadDirection;
             GameObject GO = GameObject.Instantiate(bullet, muzzle.transform.position, Quaternion.identity);
             Rigidbody bulletRigidbody = GO.GetComponent<Rigidbody>();
+            GO.GetComponent<Bullet>().shooter = this;
             bulletRigidbody.velocity = spreadDirection * GO.GetComponent<Bullet>().bulletStrength;
         }
         gunAnim.SetInteger("state", 1);

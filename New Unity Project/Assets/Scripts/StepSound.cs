@@ -14,9 +14,12 @@ public class StepSound : MonoBehaviour
     public float moving1;
     public float waitTime;
 
+    public bool wasUngrounded = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        wasUngrounded = pc.characterController.isGrounded;
         StartCoroutine(Sound());
     }
 
@@ -26,6 +29,15 @@ public class StepSound : MonoBehaviour
         moving0 = pc.legs.GetFloat("forward");
         moving1 = pc.legs.GetFloat("strafe");
 
+        if (wasUngrounded != pc.characterController.isGrounded)
+        {
+            if (pc.characterController.isGrounded)
+            {
+                AudioClip clip = sprint[Random.Range(0, sprint.Length)];
+                asource.PlayOneShot(clip, 1f);
+            }
+            wasUngrounded = pc.characterController.isGrounded;
+        }
 
         if (moving0 != 0 || moving1 != 0)
         {
@@ -42,7 +54,7 @@ public class StepSound : MonoBehaviour
 
     public IEnumerator Sound()
     {
-        if (moving0 != 0 || moving1 != 0 && pc.characterController.isGrounded)
+        if ((moving0 != 0 || moving1 != 0) && pc.characterController.isGrounded)
         {
             if (pc.movementSpeed == 8)
             {
@@ -50,6 +62,11 @@ public class StepSound : MonoBehaviour
                 asource.PlayOneShot(clip, .75f);
             }
             else if (pc.movementSpeed == 5)
+            {
+                AudioClip clip = walk[Random.Range(0, walk.Length)];
+                asource.PlayOneShot(clip, .75f);
+            }
+            else if (pc.movementSpeed == 3)
             {
                 AudioClip clip = walk[Random.Range(0, walk.Length)];
                 asource.PlayOneShot(clip, .75f);

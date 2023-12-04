@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     public int lifetime;
     public GameObject Impact;
     public ScoreKeeper sk;
+    public Gun shooter;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +30,12 @@ public class Bullet : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<AI>().isEnabled)
             {
-                sk.shotsMade++;
-                collision.gameObject.GetComponent<AI>().health -= 5;
-                if (collision.gameObject.GetComponent<AI>().health == 0)
+                if (!shooter.batchCalc)
                 {
-                    collision.gameObject.GetComponent<AI>().isEnabled = false;
+                    sk.shotsMade++;
+                    shooter.batchCalc = true;
                 }
+                collision.gameObject.GetComponent<AI>().health -= 5f;
             }
         }
         else
