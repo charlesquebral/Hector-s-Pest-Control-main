@@ -31,7 +31,7 @@ public class ScoreKeeper : MonoBehaviour
     void Start()
     {
         gameOverScore.SetActive(false);
-        time = maxTime;
+        time = maxTime * 60;
     }
 
     // Update is called once per frame

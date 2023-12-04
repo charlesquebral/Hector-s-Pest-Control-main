@@ -30,7 +30,11 @@ public class Bullet : MonoBehaviour
             if (collision.gameObject.GetComponent<AI>().isEnabled)
             {
                 sk.shotsMade++;
-                collision.gameObject.GetComponent<AI>().Die();
+                collision.gameObject.GetComponent<AI>().health -= 5;
+                if (collision.gameObject.GetComponent<AI>().health == 0)
+                {
+                    collision.gameObject.GetComponent<AI>().isEnabled = false;
+                }
             }
         }
         else

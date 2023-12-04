@@ -69,6 +69,7 @@
     <Compile Include="Assets\Ciconia Studio\_Shared Files\Scripts\Demo\SuperCamera.cs" />
     <Compile Include="Assets\Ciconia Studio\_Shared Files\Scripts\Demo\UIButton_ShowNext.cs" />
     <Compile Include="Assets\Scripts\AI.cs" />
+    <Compile Include="Assets\Scripts\AmmoHUD.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\Door.cs" />
@@ -77,7 +78,9 @@
     <Compile Include="Assets\Scripts\Key.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\PositionFollower.cs" />
+    <Compile Include="Assets\Scripts\ProceduralRecoil.cs" />
     <Compile Include="Assets\Scripts\ScoreKeeper.cs" />
+    <Compile Include="Assets\Scripts\StepSound.cs" />
     <Compile Include="Assets\Scripts\ViewBobbing.cs" />
     <Compile Include="Assets\Scripts\WeaponSway.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />

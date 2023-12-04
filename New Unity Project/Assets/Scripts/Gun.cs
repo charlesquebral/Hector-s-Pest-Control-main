@@ -24,40 +24,61 @@ public class Gun : MonoBehaviour
 
     public GameObject laser;
 
+    public Camera cam;
+
+    public ProceduralRecoil pr;
+
+    public bool isReloading = false;
+    public int reloadingFrom = 9;
+    bool indoor = false;
+    public AudioClip ind, outd, cock, reload;
+
+    Coroutine reloading;
+
     // Start is called before the first frame update
     void Start()
     {
         sk = FindObjectOfType<ScoreKeeper>();
         ammo = maxammo;
-        time = 0;
+        time = timeBetweenShots;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && ammo > 0 && time <= 0)
+        if (Input.GetMouseButtonDown(0) && ammo > 0 && time >= timeBetweenShots)
         {
+            if (reloading != null)
+            {
+                StopCoroutine(reloading);
+                isReloading = false;
+            }
             Fire();
-            ammo--;
-            time = timeBetweenShots;
+            time = 0;
         }
 
-        if (ammo <= 0)
+        if (((Input.GetKeyDown(KeyCode.R) && ammo < maxammo) || (ammo <= 0)) && !isReloading)
         {
-            ammo = maxammo;
+            isReloading = true;
+            reloadingFrom = ammo;
+            gunAnim.SetInteger("state", 2);
+            reloading = StartCoroutine(ReloadTimer());
         }
 
-        if (time > 0)
+        if (time < timeBetweenShots)
         {
-            time -= Time.deltaTime;
+            time += Time.deltaTime;
         }
         else
         {
-            gunAnim.SetInteger("state", 0);
+            if (!isReloading)
+            {
+                gunAnim.SetInteger("state", 0);
+            }
         }
 
         RaycastHit hit;
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = new Ray(muzzle.position, muzzle.forward);
         if (Physics.Raycast(ray, out hit, 1000f))
         {
             if (hit.collider != null)
@@ -67,11 +88,60 @@ public class Gun : MonoBehaviour
         }
     }
 
+    public void Reload()
+    {
+        ammo++;
+    }
+
+    public IEnumerator ReloadTimer()
+    {
+        yield return new WaitForSeconds(0.38333333333f);
+        if (ammo < maxammo)
+        {
+            Reload();
+            auso.PlayOneShot(reload, 1f);
+        }
+        yield return new WaitForSeconds(0.33333333333f);
+        if (ammo < maxammo)
+        {
+            reloading = StartCoroutine(ReloadTimer());
+        }
+        else
+        {
+            if (reloadingFrom == 0)
+            {
+                isReloading = false;
+                gunAnim.SetInteger("state", 1);
+                auso.PlayOneShot(cock, 1f);
+            }
+            else
+            {
+                isReloading = false;
+                gunAnim.SetInteger("state", 0);
+            }
+        }
+    }
+
     public void Fire()
     {
+        ammo--;
         sk.shotsTaken++;
-        auso.Play();
+        if (indoor)
+        {
+            auso.PlayOneShot(ind, 1f);
+        }
+        else
+        {
+            auso.PlayOneShot(outd, 1f);
+        }
+        if (ammo > 0)
+        {
+            auso.PlayOneShot(cock, 1f);
+        }
         ps.Play();
+
+        pr.Recoil();
+
         for (int i = 0; i < 12; i++)
         {
             Vector3 spreadDirection = muzzle.forward;
@@ -89,11 +159,27 @@ public class Gun : MonoBehaviour
     {
         if (hit.gameObject.GetComponent<AI>())
         {
-            if (hit.gameObject.GetComponent<AI>().isEnabled)
+            if (hit.gameObject.GetComponent<AI>().isEnabled && hit.gameObject.GetComponent<AI>().ability != 2)
             {
                 hit.gameObject.GetComponent<AI>().isEnabled = false;
                 hit.gameObject.GetComponent<AI>().squat = true;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<HouseData>())
+        {
+            indoor = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.GetComponent<HouseData>())
+        {
+            indoor = false;
         }
     }
 }

@@ -7,7 +7,7 @@ public class PlayerControl : MonoBehaviour
     public float jumpForce = 5.0f;
     public float gravity = -9.81f;
 
-    private CharacterController characterController;
+    public CharacterController characterController;
     public Camera playerCamera;
     private float verticalRotation = 0f;
     private Vector3 playerVelocity;
