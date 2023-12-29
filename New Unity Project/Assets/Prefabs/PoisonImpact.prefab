@@ -4855,3 +4855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 5
+  fromAwake: 1
+  shrink: 0
+  dying: 0

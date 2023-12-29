@@ -13,6 +13,10 @@ public class PlayerHealth : MonoBehaviour
     public GameObject damage;
     public float transp;
 
+    public bool godMode = false;
+
+    public HouseData currentHouse;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,15 +52,18 @@ public class PlayerHealth : MonoBehaviour
 
     public void Injure(float reduction)
     {
-        if (reduction <= 2.5f)
+        if (!godMode)
         {
-            transp = .75f;
+            if (reduction <= 2.5f)
+            {
+                transp = .75f;
+            }
+            else
+            {
+                transp = 1f;
+            }
+            health -= reduction;
         }
-        else
-        {
-            transp = 1f;
-        }
-        health -= reduction;
     }
 
     public IEnumerator InjureLoop(float reduction)
@@ -76,7 +83,8 @@ public class PlayerHealth : MonoBehaviour
         r.StartCoroutine(r.BeginRespawn());
         Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         GameObject GO = Instantiate(ragDoll[Random.Range(0, ragDoll.Length)], spawnPos, transform.rotation);
-        GO.transform.SetParent(null);
+        currentHouse.player = GO;
+        GO.transform.SetParent(currentHouse.insides.transform);
         Destroy(gameObject);
     }
 }

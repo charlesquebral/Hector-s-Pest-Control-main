@@ -698,6 +698,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 4
   fromAwake: 1
+  shrinkRend: {fileID: 0}
+  shrink: 0
+  dying: 0
 --- !u!1 &443653866902145998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3331,8 +3334,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7413717327559962960}
-  - component: {fileID: -5123663977241376129}
-  - component: {fileID: -8523781192854288121}
   m_Layer: 0
   m_Name: ragdoll 1
   m_TagString: ragdoll
@@ -3356,35 +3357,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &-5123663977241376129
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5816831550029316931}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.01, z: 0.01}
-  m_Center: {x: 0, y: 1.0909395, z: 0}
---- !u!54 &-8523781192854288121
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5816831550029316931}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &5875348333024427546
 GameObject:
   m_ObjectHideFlags: 0

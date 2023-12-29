@@ -113,6 +113,7 @@ MonoBehaviour:
   cannonballInstance: {fileID: 8761448815529633523}
   impact: {fileID: 1162577217222605287, guid: f4744f7aac494f74ea34bce50cdf1994, type: 3}
   angle: 45
+  jobDone: 0
 --- !u!114 &-377572824237418247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 1.5
   fromAwake: 0
+  shrinkRend: {fileID: 8761448815619204970}
+  shrink: 1
+  dying: 0
 --- !u!65 &2375232698854076104
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -151,6 +155,7 @@ GameObject:
   - component: {fileID: 8761448815619204971}
   - component: {fileID: 8761448815619204969}
   - component: {fileID: 8761448815619204968}
+  - component: {fileID: 5541028696380904279}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -4892,3 +4897,17 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &5541028696380904279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761448815619204970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7aa5e380b368c647953239db7913b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pc: {fileID: 0}
+  jobDone: 0

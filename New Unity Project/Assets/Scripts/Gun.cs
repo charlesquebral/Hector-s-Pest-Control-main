@@ -48,13 +48,21 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && ammo > 0 && time >= timeBetweenShots)
+        if (Time.timeScale == 1)
         {
-            if (reloading != null)
-            {
-                StopCoroutine(reloading);
-                isReloading = false;
-            }
+            DoStuff();
+        }
+    }
+
+    void DoStuff()
+    {
+        if (Input.GetMouseButtonDown(0) && ammo > 0 && time >= timeBetweenShots && !isReloading)
+        {
+            //if (reloading != null)
+            //{
+            //    StopCoroutine(reloading);
+            //    isReloading = false;
+            //}
             Fire();
             time = 0;
         }
@@ -87,6 +95,10 @@ public class Gun : MonoBehaviour
             {
                 laser.transform.position = hit.point;
             }
+        }
+        else
+        {
+            laser.transform.position = muzzle.position + muzzle.forward * 50f;
         }
     }
 
@@ -128,7 +140,11 @@ public class Gun : MonoBehaviour
     {
         batchCalc = false;
         ammo--;
-        sk.shotsTaken++;
+        if (sk != null)
+        {
+            sk.shotsTaken++;
+        }
+
         if (indoor)
         {
             auso.PlayOneShot(ind, 1f);

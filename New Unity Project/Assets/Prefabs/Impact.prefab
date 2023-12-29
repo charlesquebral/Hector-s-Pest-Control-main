@@ -45,6 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 2
+  fromAwake: 1
+  shrinkRend: {fileID: 0}
+  shrink: 0
+  dying: 0
 --- !u!1 &5865986631858157334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,7 +1419,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0, g: 0, b: 0, a: 0.30588236}
+        key0: {r: 0, g: 0, b: 0, a: 0.19215687}
         key1: {r: 0, g: 0, b: 0, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}

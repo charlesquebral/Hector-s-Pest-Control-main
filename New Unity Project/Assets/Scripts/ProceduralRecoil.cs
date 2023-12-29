@@ -24,10 +24,13 @@ public class ProceduralRecoil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, Time.deltaTime * returnAmount);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, Time.fixedDeltaTime * snappiness);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(currentRotation), Time.deltaTime * 12);
-        Back();
+        if (Time.timeScale == 1)
+        {
+            targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, Time.deltaTime * returnAmount);
+            currentRotation = Vector3.Slerp(currentRotation, targetRotation, Time.fixedDeltaTime * snappiness);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(currentRotation), Time.deltaTime * 12);
+            Back();
+        }
     }
 
     public void Recoil()

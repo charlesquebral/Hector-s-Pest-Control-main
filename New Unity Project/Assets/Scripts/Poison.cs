@@ -62,7 +62,7 @@ public class Poison : MonoBehaviour
                 if (ph != null)
                 {
                     float dist = Vector3.Distance(transform.position, ph.gameObject.transform.position);
-                    if (dist <= 5)
+                    if (dist <= 2)
                     {
                         ph.looper = 3;
                         ph.StartCoroutine(ph.InjureLoop(2.5f));

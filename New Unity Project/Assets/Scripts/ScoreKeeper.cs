@@ -23,9 +23,12 @@ public class ScoreKeeper : MonoBehaviour
 
     public GameObject gameOverScore;
     public float gradeAvg;
+    public TextMeshProUGUI gameOverTitle;
     public TextMeshProUGUI gameOverGrade;
     public Gradient col;
     public AI[] hectors;
+
+    public bool started = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,10 +37,18 @@ public class ScoreKeeper : MonoBehaviour
         time = maxTime * 60;
     }
 
+    public void StartTimer()
+    {
+        if (!started)
+        {
+            started = true;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (!gameOver && time > 0)
+        if (!gameOver && time > 0 && numDead < numTot)
         {
             RenderGameplay();
         }
@@ -52,13 +63,16 @@ public class ScoreKeeper : MonoBehaviour
 
     public void RenderGameplay()
     {
-        time -= Time.deltaTime;
+        if (started)
+        {
+            time -= Time.deltaTime;
+        }
 
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
         timeText.text = "Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        if (numDead < numTot)
+        if (numDead <= numTot)
         {
             scoreText.text = "Hectors Killed: " + numDead + "/" + numTot;
         }
@@ -151,6 +165,15 @@ public class ScoreKeeper : MonoBehaviour
         else
         {
             gameOverGrade.text = "F";
+        }
+
+        if (gradeAvg >= 0.70f)
+        {
+            gameOverTitle.text = "STAGE CLEAR";
+        }
+        else
+        {
+            gameOverTitle.text = "STAGE FAILED";
         }
 
         hectors = FindObjectsOfType<AI>();

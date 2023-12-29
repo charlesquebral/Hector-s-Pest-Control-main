@@ -4861,6 +4861,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3e410baa1aeb74141acb99875a1c6ccf, type: 3}
   - {fileID: 8300000, guid: b37eea0976db1124ba9e2b99b069f2fa, type: 3}
   clip: {fileID: 8300000, guid: b37eea0976db1124ba9e2b99b069f2fa, type: 3}
+  jobDone: 0
+  ragDoll: {fileID: 0}
+  killrange: 3
+  midrange: 5
+  farrange: 7
+  killDamage: 100
+  midDamage: 50
+  farDamage: 25
 --- !u!114 &560415585651580843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4875,6 +4883,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 2
   fromAwake: 1
+  shrinkRend: {fileID: 0}
+  shrink: 0
+  dying: 0
 --- !u!82 &560415585651580841
 AudioSource:
   m_ObjectHideFlags: 0

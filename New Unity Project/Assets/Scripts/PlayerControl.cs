@@ -26,6 +26,8 @@ public class PlayerControl : MonoBehaviour
 
     public float camSpeed;
 
+    public Vector3 legsFull;
+
     void Start()
     {
         sk = FindObjectOfType<ScoreKeeper>();
@@ -58,7 +60,7 @@ public class PlayerControl : MonoBehaviour
             characterController.center = collPos[1];
             playerCamera.transform.localPosition = Vector3.Slerp(playerCamera.transform.localPosition, stance[1], 5 * Time.deltaTime);
             movementSpeed = 3;
-            legs.gameObject.transform.localScale = Vector3.Slerp(legs.gameObject.transform.localScale, new Vector3(1.45f, 1.45f, 1.45f), 5 * Time.deltaTime);
+            legs.gameObject.transform.localScale = Vector3.Slerp(legs.gameObject.transform.localScale, legsFull, 5 * Time.deltaTime);
         }
         else if (prone)
         {
@@ -77,7 +79,7 @@ public class PlayerControl : MonoBehaviour
             characterController.height = collHeight[0];
             characterController.center = collPos[0];
             playerCamera.transform.localPosition = Vector3.Slerp(playerCamera.transform.localPosition, stance[0], 5 * Time.deltaTime);
-            legs.gameObject.transform.localScale = Vector3.Slerp(legs.gameObject.transform.localScale, new Vector3(1.45f,1.45f,1.45f), 5 * Time.deltaTime);
+            legs.gameObject.transform.localScale = Vector3.Slerp(legs.gameObject.transform.localScale, legsFull, 5 * Time.deltaTime);
 
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetAxis("Vertical") > 0 && !crouch && !prone)
             {
@@ -93,7 +95,10 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        Move();
+        if (Time.timeScale == 1)
+        {
+            Move();
+        }
 
         legs.SetFloat("forward", Input.GetAxis("Vertical"));
         legs.SetFloat("strafe", Input.GetAxis("Horizontal"));
@@ -128,7 +133,7 @@ public class PlayerControl : MonoBehaviour
                 legs.SetBool("jump", false);
                 shadow.SetBool("jump", false);
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !crouch && !prone)
             {
                 playerVelocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
             }

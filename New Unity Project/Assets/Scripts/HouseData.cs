@@ -10,30 +10,38 @@ public class HouseData : MonoBehaviour
     public List<Door> openDoors= new List<Door>();
     public GameObject player;
 
-    public GameObject Hectors;
+    public GameObject[] hectorPrefab;
+    public bool increment;
+    public int[] abilities;
+    public int maxAbilities = 0;
 
-    bool playerExists;
+    ScoreKeeper sk;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerExists = player == null;
+        sk = FindObjectOfType<ScoreKeeper>();
         insides.SetActive(false);
+        int i = Random.Range(0, hectorPrefab.Length);
+        GameObject GO = Instantiate(hectorPrefab[i], insides.transform);
+        foreach (AI g in GO.GetComponentsInChildren<AI>())
+        {
+            sk.numTot += 1;
+            if (increment)
+            {
+                g.ability = Random.Range(0, maxAbilities);
+            }
+            else
+            {
+                g.ability = abilities[Random.Range(0, abilities.Length)];
+            }
+            g.bounds = GetComponent<BoxCollider>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerExists != (player == null))
-        {
-            if (player == null)
-            {
-                player = gameObject;
-                current = StartCoroutine(SetAsNull());
-            }
-            playerExists = player == null;
-        }
-
         for (int i = 0; i < doors.Length; i++)
         {
             if (doors[i].open)
@@ -61,19 +69,9 @@ public class HouseData : MonoBehaviour
 
         if (openDoors.Count > 0 || player != null)
         {
-            if (current != null)
-            {
-                StopCoroutine(current);
-            }
-
             if (!insides.activeSelf)
             {
                 insides.SetActive(true);
-            }
-
-            if (!Hectors.activeSelf)
-            {
-                Hectors.SetActive(true);
             }
         }
         else
@@ -81,11 +79,6 @@ public class HouseData : MonoBehaviour
             if (insides.activeSelf)
             {
                 insides.SetActive(false);
-            }
-
-            if (Hectors.activeSelf)
-            {
-                Hectors.SetActive(false);
             }
         }
     }
@@ -95,12 +88,18 @@ public class HouseData : MonoBehaviour
         if (other.GetComponent<PlayerControl>())
         {
             player = other.gameObject;
+            player.GetComponent<PlayerHealth>().currentHouse = this;
+
+            if (current != null)
+            {
+                StopCoroutine(current);
+            }
         }
         else if (other.GetComponent<AI>())
         {
-            if (!other.gameObject.transform.parent == Hectors.transform)
+            if (other.transform.parent != insides.transform)
             {
-                other.gameObject.transform.SetParent(Hectors.transform);
+                other.gameObject.transform.parent = insides.transform;
             }
         }
     }
@@ -110,26 +109,15 @@ public class HouseData : MonoBehaviour
     {
         if (other.GetComponent<PlayerControl>())
         {
+            player.GetComponent<PlayerHealth>().currentHouse = null;
             player = null;
         }
         else if (other.GetComponent<AI>())
         {
-            if (other.gameObject.transform.parent == Hectors.transform)
+            if (other.transform.parent == insides.transform)
             {
-                other.gameObject.transform.SetParent(gameObject.transform);
+                other.gameObject.transform.parent = null;
             }
         }
-    }
-
-    public IEnumerator SetAsNull()
-    {
-        yield return new WaitForSeconds(5);
-        GameObject ragDoll = GameObject.FindGameObjectWithTag("ragdoll");
-        if (ragDoll != null)
-        {
-            ragDoll.transform.SetParent(insides.transform);
-            ragDoll.tag = "Untagged";
-        }
-        player = null;
     }
 }

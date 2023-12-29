@@ -10,6 +10,13 @@ public class Explosion : MonoBehaviour
     public bool jobDone = false;
 
     public GameObject ragDoll;
+
+    public float killrange;
+    public float midrange;
+    public float farrange;
+
+    public float killDamage, midDamage, farDamage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,17 +24,17 @@ public class Explosion : MonoBehaviour
         if (ph != null)
         {
             float dist = Vector3.Distance(transform.position, ph.gameObject.transform.position);
-            if (dist <= 6)
+            if (dist <= killrange)
             {
-                ph.Injure(100f);
+                ph.Injure(killDamage);
             }
-            else if (dist > 6 && dist <= 8)
+            else if (dist > killrange && dist <= midrange)
             {
-                ph.Injure(50f);
+                ph.Injure(midDamage);
             }
-            else if (dist > 8 && dist <= 11)
+            else if (dist > midrange && dist <= farrange)
             {
-                ph.Injure(25f);
+                ph.Injure(farDamage);
             }
         }
 
@@ -43,7 +50,8 @@ public class Explosion : MonoBehaviour
             ragDoll = GameObject.FindGameObjectWithTag("ragdoll");
             if (ragDoll != null)
             {
-                ragDoll.GetComponent<Rigidbody>().AddExplosionForce(470000, transform.position, 100, 3.0F);
+                Rigidbody[] rdrb = ragDoll.GetComponentsInChildren<Rigidbody>();
+                rdrb[0].AddExplosionForce(470000, transform.position, 100, 3.0F);
                 ragDoll.tag = "Untagged";
                 jobDone = true;
             }

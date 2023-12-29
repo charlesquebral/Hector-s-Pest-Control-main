@@ -10,6 +10,9 @@ public class Respawn : MonoBehaviour
     public Color[] options;
     public Color target;
     public Image blackout;
+    public Image damage;
+
+    public bool active = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,18 +23,32 @@ public class Respawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        blackout.color = Color.Lerp(blackout.color, target, 12 * Time.deltaTime);
+        if (active)
+        {
+            blackout.color = Color.Lerp(blackout.color, target, 12 * Time.deltaTime);
+        }
     }
 
     public IEnumerator BeginRespawn()
     {
         yield return new WaitForSeconds(3);
         target = options[1];
+        damage.color = options[0];
         yield return new WaitForSeconds(1);
+        HouseData[] houses = FindObjectsOfType<HouseData>();
+        for (int i = 0; i < houses.Length; i++)
+        {
+            houses[i].player = null;
+        }
+        SpawnPlayer();
+        target = options[0];
+    }
+
+    public void SpawnPlayer()
+    {
         GameObject GO = Instantiate(player, spawn, Quaternion.identity);
         GO.transform.SetParent(null);
         GO.GetComponent<PlayerControl>().playerCamera.gameObject.SetActive(false);
         GO.GetComponent<PlayerControl>().playerCamera.gameObject.SetActive(true);
-        target = options[0];
     }
 }
